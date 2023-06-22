@@ -5,6 +5,38 @@ from .models import *
 from .domain.Response import R
 from datetime import datetime
 # Create your views here.
+def delContact(request):
+    if request.method == 'POST':
+        body = request.body
+        obj = json.loads(body)
+        list = obj['data']
+        for item in list:
+            Contact.objects.filter(name=item).delete()
+        return HttpResponse(R(200, "删除用户成功", {}))
+    else:
+        return HttpResponse(R(500, "服务器内部错误", {}))
+def upadteContact(request):
+    if request.method == 'POST':
+        body = request.body
+        obj = json.loads(body)
+        Contact.objects.filter(name=obj['name']).update(sex=obj['sex'], tel=obj['tel'],birth=obj['birth'],address=obj['address'],specialize_id=obj['specialize_id'])
+        return HttpResponse(R(200, "修改用户成功", {}))
+    else: return HttpResponse(R(500, "服务器内部错误", {}))
+def addContact(request):
+    if request.method == 'POST':
+        body = request.body
+        obj = json.loads(body)
+        Contact.objects.create(name=obj['name'], sex=obj['sex'], tel=obj['tel'],birth=obj['birth'],address=obj['address'],specialize_id=obj['specialize_id'])
+        return HttpResponse(R(200, "增加用户成功", {}))
+    else: return HttpResponse(R(500, "服务器内部错误", {}))
+
+def getSpecialize(request):
+    if request.method == 'GET':
+        specialize = request.GET.get('specialize')
+        print(specialize)
+        obj = Specialize.objects.filter(specialize_name=specialize).values().first()
+        return HttpResponse(R(200, "查询学院成功", { "academy": obj['academy_name'], "specialize_id": obj['specialize_id']}))
+    else: HttpResponse(R(500, "服务器内部错误", {}))
 def selectSpecialize(request):
     if request.method == 'GET':
         keyword = request.GET.get('keywords')

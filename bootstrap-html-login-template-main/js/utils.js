@@ -1,9 +1,16 @@
-function addTar(data) {
+function addTar(data, index) {
+            var permiss = localStorage.getItem("permission")
+            var th = $("<th>", {
+                "scpoe": "row",
+                "html": index
+            })
+            if(permiss == "admin") {
+                th.html("")
+                th.append($("<input>", {
+                    "type": "checkbox"
+                }))
+            }
             var tar = $("<tr>").append(
-                $("<th>", {
-                    "scope": "row",
-                    "html": "#"
-                }),
                 $("<td>", {
                     "html": data.name
                 }),
@@ -26,6 +33,7 @@ function addTar(data) {
                     "html": data.specialize
                 })
             )
+            tar.prepend(th)
             return tar
         }
 function retainReq(url) {

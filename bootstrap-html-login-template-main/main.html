@@ -71,7 +71,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col" class="fisrt-th">操作</th>
       <th scope="col">姓名</th>
       <th scope="col">性别</th>
       <th scope="col">联系方式</th>
@@ -84,13 +84,13 @@
   <tbody>
   </tbody>
 </table>
-   <nav aria-label="Page navigation example">
+<nav aria-label="Page navigation example">
   <ul class="pagination justify-content-end">
-    <li class="page-item"><a class="page-link text-muted" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link text-muted" href="#">1</a></li>
-    <li class="page-item"><a class="page-link text-muted" href="#">2</a></li>
-    <li class="page-item"><a class="page-link text-muted" href="#">3</a></li>
-    <li class="page-item"><a class="page-link text-muted" href="#">Next</a></li>
+    <li class="page-item"><a class="page-link text-muted" >Previous</a></li>
+    <li class="page-item"><a class="page-link text-muted" >1</a></li>
+    <li class="page-item"><a class="page-link text-muted" >2</a></li>
+    <li class="page-item"><a class="page-link text-muted" >3</a></li>
+    <li class="page-item"><a class="page-link text-muted" >Next</a></li>
   </ul>
 </nav>
     </div>
@@ -106,8 +106,9 @@
             username = localStorage.getItem('userName')
             params['username'] = username
         }
+        if(!params['username']) location = 'login.html'
         $("#username-info").html(params['username'])
-         $.ajax({
+        $.ajax({
             method: "get",
             url: "http://localhost/permission/",
             data: params,
@@ -118,6 +119,10 @@
                     // identity 0代表普通用户 1代表管理员
                     if(!res.data.identity) {
                         $("#admin_permission").remove()
+                        $(".fisrt-th").html("序号")
+                        localStorage.setItem("permission", "user")
+                    }else {
+                        localStorage.setItem("permission", "admin")
                     }
                 }else if (res.status == 404 ) {
                     location = 'login.html'
@@ -134,7 +139,7 @@
                 res = JSON.parse(res)
                 if(res.status== 200) {
                     for(var i = 0; i < res.data.length; i++ ) {
-                        $("tbody").append(addTar(res.data[i]))
+                        $("tbody").append(addTar(res.data[i], i + 1))
                     }
                 }
             }

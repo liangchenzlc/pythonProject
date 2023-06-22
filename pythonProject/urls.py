@@ -24,5 +24,9 @@ urlpatterns = [
     path('permission/', app.views.getPermisson, name="getPermisson"),
     path('select/name/', app.views.selectName, name='select_name'),
     path('select/address/', app.views.selectAddress, name='select_address'),
-    path('select/specialize/', app.views.selectSpecialize, name='select_specialize')
+    path('select/specialize/', app.views.selectSpecialize, name='select_specialize'),
+    path('getSpecialize/', app.views.getSpecialize, name="get_specialize"),
+    path('addcontact/', app.views.addContact, name="addcontact"),
+    path('updateContact/', app.views.upadteContact, name="updatecontact"),
+    path("delcontact/", app.views.delContact, name="delcontact")
 ]
